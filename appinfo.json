@@ -1,0 +1,16 @@
+{
+  "id":"org.webosinternals.zcorder",
+  "version":"0.6.0",
+  "release_date": "7-May-2010",
+  "title":"zcorder",
+  "vendor":"webos-internals",
+  "vendor_email":"zsoc.webosinternals@gmail.com",
+  "vendor_url":"http://www.webos-internals.org/wiki/Application:zcorder",
+  "main":"index.html",
+  "icon":"icon.png",
+  "miniicon":"miniicon.png",
+  "type":"web",
+  "theme":"light",
+  "noWindow":false,
+  "noDeprecatedStyles":true
+}

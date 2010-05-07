@@ -1,0 +1,41 @@
+#!/bin/sh
+
+PID="org.webosinternals.zcorder"
+
+# Handle execution as pmPreRemove.script
+if [ -z "$IPKG_OFFLINE_ROOT" ]; then
+  IPKG_OFFLINE_ROOT=/media/cryptofs/apps
+  mount -o remount,rw /
+fi
+
+MP3LAMESYM="/usr/lib/libmp3lame.so"
+GSTLAMESYM="/usr/lib/gstreamer-0.10/libgstlame-webosinternals.so"
+GSTLEVELSYM="/usr/lib/gstreamer-0.10/libgstlevel-webosinternals.so"
+
+# Remove all symlinks
+rm -f $MP3LAMESYM
+rm -f $GSTLAMESYM
+rm -f $GSTLEVELSYM
+
+# Stop any existing service
+/sbin/stop ${PID} || true
+killall -9 ${PID} || true
+
+# Remove the upstart script
+rm -f /etc/event.d/${PID}
+
+# Remove the exec
+rm -f /var/usr/sbin/${PID}
+
+exit 0
+
+
+
+
+
+
+
+
+
+
+
