@@ -7,8 +7,8 @@ function StageAssistant() {
 StageAssistant.prototype.setup = function() {
 	appMenuModel = {
     	items: [
-			{label: "Preferences", command: 'pushPrefs'},
-            {label: "Support", command: 'pushSupport'}
+			{label: $L("Preferences"), command: 'pushPrefs'},
+            {label: $L("Support"), command: 'pushSupport'}
     	]
 	};
 	

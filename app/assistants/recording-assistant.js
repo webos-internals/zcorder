@@ -16,8 +16,8 @@ RecordingAssistant.prototype.setup = function() {
 	this.cmdMenuModel = {
     visible: true,
     items: [
-        {items:[{label: $L('Record'), iconPath:'images/record.png', command:'record', disabled: false}, {label: $L('Stop'), iconPath:'images/stop.png', command:'stop', disabled: true}]},
-        {items:[{label: $L('vox'), command:'toggle_vox', disabled: true}, {label: $L('play'), iconPath:'images/play.png', command:'play', disabled: true}]}
+        {items:[{label: $L("Record"), iconPath:'images/record.png', command:'record', disabled: false}, {label: $L("Stop"), iconPath:'images/stop.png', command:'stop', disabled: true}]},
+        {items:[{label: $L("vox"), command:'toggle_vox', disabled: true}, {label: $L("play"), iconPath:'images/play.png', command:'play', disabled: true}]}
     ]
 	};
 	
@@ -58,7 +58,7 @@ RecordingAssistant.prototype.eventSuccess = function(payload){
 };
 
 RecordingAssistant.prototype.eventFailure = function(response){
-	$("error-messages").innerHTML = "Event subscription failed: " + response.errorText;
+	$("error-messages").innerHTML = $L("Event subscription failed: ") + response.errorText;
 };
 
 RecordingAssistant.prototype.record = function(event) {
@@ -90,7 +90,7 @@ RecordingAssistant.prototype.recordSuccess = function(payload) {
 	currentRecording = false;
 	this.cmdMenuModel.items[0].items[0].disabled = false; // record
 	this.controller.modelChanged(this.cmdMenuModel);
-	$("internal-messages").innerHTML = "Recording Stopped.<br>";
+	$("internal-messages").innerHTML = $L("Recording Stopped.<br>");
 };
 
 RecordingAssistant.prototype.recordingStarted = function(msg) {
@@ -101,7 +101,7 @@ RecordingAssistant.prototype.recordingStarted = function(msg) {
     this.controller.modelChanged(this.cmdMenuModel);
     this.cmdMenuModel.items[0].items[1].disabled = false; // enable stop button
     this.controller.modelChanged(this.cmdMenuModel);
-    $("internal-messages").innerHTML = "Recording...<br>";
+    $("internal-messages").innerHTML = $L("Recording...<br>");
 };
 
 RecordingAssistant.prototype.recordFailure = function(response) {
@@ -110,7 +110,7 @@ RecordingAssistant.prototype.recordFailure = function(response) {
     this.controller.modelChanged(this.cmdMenuModel);
     this.cmdMenuModel.items[0].items[1].disabled = true; // stop
     this.controller.modelChanged(this.cmdMenuModel);
-    $("internal-messages").innerHTML = "Recording failed:<br>" + response.errorText;
+    $("internal-messages").innerHTML = $L("Recording failed:<br>") + response.errorText;
 };
 
 RecordingAssistant.prototype.stop = function(event) {
@@ -125,7 +125,7 @@ RecordingAssistant.prototype.stop = function(event) {
 RecordingAssistant.prototype.recordingStopping = function(){
 	this.cmdMenuModel.items[0].items[1].disabled = true; // stop
 	this.controller.modelChanged(this.cmdMenuModel);
-	$("internal-messages").innerHTML = "Saving, please wait...<br>";
+	$("internal-messages").innerHTML = $L("Saving, please wait...<br>");
 };
 
 RecordingAssistant.prototype.recordingStopped = function(response) {
@@ -135,7 +135,7 @@ RecordingAssistant.prototype.stopFailure = function(response) {
     currentRecording = false;  // Might as well, can't stop it now anyway
     this.cmdMenuModel.items[0].items[0].disabled = false; // record
 	this.controller.modelChanged(this.cmdMenuModel);
-    $("internal-messages").innerHTML = "Stop failed (WARNING, THIS SHOULD NEVER HAPPEN):<br>" + response.errorText;
+    $("internal-messages").innerHTML = $L("Stop failed (WARNING, THIS SHOULD NEVER HAPPEN):<br>") + response.errorText;
 };
 
 RecordingAssistant.prototype.play = function(event) {
