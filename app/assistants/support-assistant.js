@@ -6,13 +6,8 @@ function SupportAssistant() {
 }
 
 SupportAssistant.prototype.setup = function() {
-	/* this function is for setup tasks that have to happen when the scene is first created */
-		
-	/* use Mojo.View.render to render view templates and add them to the scene, if needed */
-	
-	/* setup widgets here */
-	
-	/* add event handlers to listen to events from widgets */
+	// appMenuModel defined in stage-assistant.js
+	this.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: true}, appMenuModel);
 };
 
 SupportAssistant.prototype.activate = function(event) {

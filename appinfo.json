@@ -10,6 +10,7 @@
   "icon":"icon.png",
   "miniicon":"miniicon.png",
   "type":"web",
+  "plug-ins": true,
   "theme":"light",
   "noWindow":false,
   "noDeprecatedStyles":true

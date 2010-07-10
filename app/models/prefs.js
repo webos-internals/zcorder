@@ -7,6 +7,7 @@ var prefs = {
     defaults: { stream_rate: 11025,
                 lame_bitrate: 96,
                 lame_quality: 5,
+				bit_depth: 16,
              // voice_activation: 0,
                 firstUse: true
     },

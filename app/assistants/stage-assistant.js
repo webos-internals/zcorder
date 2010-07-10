@@ -5,6 +5,8 @@ function StageAssistant() {
 }
 
 StageAssistant.prototype.setup = function() {
+	var pluginelement = document.getElementById("zcorder-plugin");
+	pluginelement.eventSuccess = this.eventSuccess.bind(this);
 	appMenuModel = {
     	items: [
 			{label: "Preferences", command: 'pushPrefs'},

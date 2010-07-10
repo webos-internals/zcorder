@@ -29,15 +29,6 @@ RecordingAssistant.prototype.activate = function() {
     this.recordFailure = this.recordFailure.bind(this);
     this.recordingStopped = this.recordingStopped.bind(this);
     this.stopFailure = this.stopFailure.bind(this);
-	this.controller.serviceRequest('luna://org.webosinternals.zcorder', {
-        	method: 'get_events',
-			parameters: {
-				subscribe: true
-        	},
-        	onSuccess: this.eventSuccess,
-        	onFailure: this.eventFailure,
-        	onError: this.eventFailure
-    });
 	this.resetPosition();
 };
 
@@ -55,40 +46,25 @@ RecordingAssistant.prototype.eventSuccess = function(payload){
 	if (payload.time) {
 		$("position").innerHTML = payload.time.substr(0,7);
 	}
-};
-
-RecordingAssistant.prototype.eventFailure = function(response){
-	$("error-messages").innerHTML = "Event subscription failed: " + response.errorText;
+	if (payload.lastfilename) {
+		lastRecording = payload.lastfilename;
+		this.recordSuccess();
+	}
+	
 };
 
 RecordingAssistant.prototype.record = function(event) {
 	this.recordingStarted();
-    this.controller.serviceRequest('luna://org.webosinternals.zcorder', {
-        method: 'start_record',
-        parameters: {
-            source_device: source_device,
-            stream_rate: prefs.stream_rate,
-            lame_bitrate: prefs.lame_bitrate,
-            lame_quality: prefs.lame_quality,
-            voice_activation: prefs.voice_activation,
-            filename: filename
-        },
-		onSuccess: this.recordSuccess,
-		onFailure: this.recordFailure,
-        onError: this.recordFailure
-    });
+    pluginelement.start_record(source_device, prefs.stream_rate, prefs.lame_bitrate, prefs.lame_quality, prefs.voice_activation, "filename");
 };
 
 RecordingAssistant.prototype.recordSuccess = function(payload) {
-	if (payload.lastfilename) {
-		lastRecording = payload.lastfilename;
-	}
 	if (lastRecording) {
-		this.cmdMenuModel.items[1].items[1].disabled = false; // play
+		this.cmdMenuModel.items[1].items[1].disabled = false; // enable play
 		this.controller.modelChanged(this.cmdMenuModel);
 	}
 	currentRecording = false;
-	this.cmdMenuModel.items[0].items[0].disabled = false; // record
+	this.cmdMenuModel.items[0].items[0].disabled = false; // enable record
 	this.controller.modelChanged(this.cmdMenuModel);
 	$("internal-messages").innerHTML = "Recording Stopped.<br>";
 };
@@ -115,15 +91,11 @@ RecordingAssistant.prototype.recordFailure = function(response) {
 
 RecordingAssistant.prototype.stop = function(event) {
 	this.recordingStopping();
-	this.controller.serviceRequest('luna://org.webosinternals.zcorder', {
-		method: 'stop_record',
-		onFailure: this.stopFailure,
-		onError: this.stopFailure
-	});
+	pluginelement.stop_record();
 };
 
 RecordingAssistant.prototype.recordingStopping = function(){
-	this.cmdMenuModel.items[0].items[1].disabled = true; // stop
+	this.cmdMenuModel.items[0].items[1].disabled = true; // disable stop
 	this.controller.modelChanged(this.cmdMenuModel);
 	$("internal-messages").innerHTML = "Saving, please wait...<br>";
 };
@@ -155,8 +127,6 @@ RecordingAssistant.prototype.deactivate = function(event) {
 
 RecordingAssistant.prototype.cleanup = function(event) {
 	if (currentRecording === true) {
-			this.controller.serviceRequest('luna://org.webosinternals.zcorder', {
-		method: 'stop_record'
-		});
+		pluginelement.stop_record();
 	}
 };

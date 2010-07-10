@@ -2,7 +2,10 @@ function PreferencesAssistant() {
 }
 
 PreferencesAssistant.prototype.setup = function() {
-    try {
+	// appMenuModel defined in stage-assistant.js
+	this.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: true}, appMenuModel);
+    
+	try {
     this.optionChanged = this.optionChanged.bindAsEventListener(this);
     
     this.controller.setupWidget("stream_rate",
@@ -23,7 +26,26 @@ PreferencesAssistant.prototype.setup = function() {
             }
         );
     
-    Mojo.Event.listen(this.controller.get("stream_rate"),
+    Mojo.Event.listen(this.controller.get("bit_depth"),
+                      Mojo.Event.propertyChange, this.optionChanged);
+					  
+	    this.controller.setupWidget("bit_depth",
+            {
+                label: $L("Bit Depth"),
+                labelPlacement: Mojo.Widget.labelPlacementLeft,
+                choices: [
+					{label: $L("8"), value: 8},
+                    {label: $L("16"), value: 16}
+                    ]
+            },
+            this.rateModel = {
+                value: prefs.bit_depth,
+                optionName: "bit_depth",
+                disabled: false
+            }
+        );
+    
+    Mojo.Event.listen(this.controller.get("bit_depth"),
                       Mojo.Event.propertyChange, this.optionChanged);
 
     this.controller.setupWidget("lame_bitrate",
