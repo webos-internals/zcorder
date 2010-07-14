@@ -23,6 +23,7 @@
 #include <signal.h>
 #include <string.h>
 #include <sched.h>
+#include <syslog.h>
 
 #include "zcorder.h"
 #include "misc.h"
@@ -93,6 +94,8 @@ void sighandler(int sig) {
 }
 
 int main(int argc, char *argv[]) {
+
+	syslog(LOG_INFO, "Is it starting at all? zsoc");
 
 	signal(SIGINT, sighandler);
 	signal(SIGTERM, sighandler);

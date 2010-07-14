@@ -2,11 +2,11 @@ function StageAssistant() {
 	source_device = 0;
 	filename = 0;
     currentRecording = false;
+	pluginelement = document.getElementById("zcorder-plugin");
 }
 
 StageAssistant.prototype.setup = function() {
-	var pluginelement = document.getElementById("zcorder-plugin");
-	pluginelement.eventSuccess = this.eventSuccess.bind(this);
+	
 	appMenuModel = {
     	items: [
 			{label: "Preferences", command: 'pushPrefs'},

@@ -29,6 +29,7 @@ RecordingAssistant.prototype.activate = function() {
     this.recordFailure = this.recordFailure.bind(this);
     this.recordingStopped = this.recordingStopped.bind(this);
     this.stopFailure = this.stopFailure.bind(this);
+    pluginelement.eventSuccess = this.eventSuccess.bind(this);
 	this.resetPosition();
 };
 

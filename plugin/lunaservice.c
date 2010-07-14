@@ -22,8 +22,10 @@
 #include <pthread.h>
 #include <sched.h>
 #include <string.h>
+#include <syslog.h>
 
 #include "PDL.h"
+#include "SDL.h"
 #include "zcorder.h"
 
 pthread_mutex_t recording_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -122,28 +124,35 @@ PDL_bool stop_record(PDL_JSParameters *params) {
 
 void start_service() {
 
-	PDL_Init(0); // WTF does this do?
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		syslog(LOG_INFO, "sdl init ESPLODED!!!! zsoc"); //remove me after debug plz
+	}
 
+	PDL_Init(0); // WTF does this do?
+	syslog(LOG_INFO, "pdl initialized zsoc"); // remove plz
 	 // register the JS callbacks
 	PDL_RegisterJSHandler("start_record", start_record);
 	PDL_RegisterJSHandler("stop_record", stop_record);
-
+	syslog(LOG_INFO, "handler's registered. zsoc"); //
 	// finish registration and start the callback handling thread
 	PDL_JSRegistrationComplete();
 
+	syslog(LOG_INFO, "registration complete called. zsoc"); //remove me after debug plz
+
 	GMainLoop *loop = g_main_loop_new(NULL, FALSE);
 	g_main_loop_run(loop);
+	syslog(LOG_INFO, "gmain loop broken. zsoc"); //
 }
 
 void respond_to_gst_event(int message_type, char *jsonmessage) {
 
-	const char **jsonResponse;
+	const char *jsonResponse;
 
 	if (message_type == 1337) // position query response
-		asprintf(&jsonResponse[0], "{\"time\":\"%s\"}", jsonmessage);
+		asprintf(&jsonResponse, "{\"time\":\"%s\"}", jsonmessage);
 
 	else
-		asprintf(&jsonResponse[0], "{\"gst_message_type\":%d,\"message\":\"%s\"}", message_type, jsonmessage);
+		asprintf(&jsonResponse, "{\"gst_message_type\":%d,\"message\":\"%s\"}", message_type, jsonmessage);
 
 	PDL_CallJS("eventSuccess", jsonResponse, 1);
 }
