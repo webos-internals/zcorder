@@ -3,6 +3,9 @@ function PreferencesAssistant() {
 
 PreferencesAssistant.prototype.setup = function() {
     try {
+
+    $('Recording Preferences').innerHTML=$L('Recording Preferences');
+
     this.optionChanged = this.optionChanged.bindAsEventListener(this);
     
     this.controller.setupWidget("stream_rate",

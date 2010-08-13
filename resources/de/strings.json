@@ -1,0 +1,23 @@
+{
+"Stream Rate": "Stream Rate",
+"Bitrate": "Bitrate",
+"Quality": "Qualität",
+"Best": "Hoch",
+"Medium": "Mittel",
+"Worst": "Niedrig",
+"Record": "Aufnehmen",
+"Stop": "Stop",
+"vox": "VOX",
+"play": "Abspielen",
+"Event subscription failed: ": "Event subscription fehlgeschlagen: ",
+"Recording Stopped.<br>": "Aufnahme wurde gestoppt.<br>",
+"Recording...<br>": "Aufnahme läuft...<br>",
+"Recording failed:<br>": "Aufnahme fehlgeschlagen:<br>",
+"Saving, please wait...<br>": "Speichere Daten, bitte warten...<br>",
+"Stop failed (WARNING, THIS SHOULD NEVER HAPPEN):<br>": "Stop failed (WARNING, THIS SHOULD NEVER HAPPEN):<br>",
+"Preferences": "Einstellungen",
+"Support": "Support",
+"Microphone": "Mikrofon",
+"Media Capture": "Medienerfassung",
+"Recording Preferences": "Aufnahmeeinstellungen"
+} 
